@@ -2,10 +2,16 @@
 
 # Argumentos passados para o script
 TAP_ON_VALUE=$1
-TEMPLATE_FILE="/home/loandre/Downloads/TestFlow/ShellScript/template_test.yaml"
-GENERATED_TEST_FILE="/home/loandre/Downloads/TestFlow/ShellScript/teste_temp.yaml"
-MAESTRO_OUTPUT_DIR="/home/loandre/.maestro/tests"
-SCRIPT_DIR="/home/loandre/Downloads/TestFlow/ShellScript"
+
+# Caminhos relativos com base no diretório atual
+TEMPLATE_FILE="./template_test.yaml"
+GENERATED_TEST_FILE="./teste_temp.yaml"
+
+# Diretório de saída do Maestro (usando variável de ambiente para home do usuário)
+MAESTRO_OUTPUT_DIR="$HOME/.maestro/tests"
+
+# Diretório atual
+SCRIPT_DIR=$(pwd)
 
 # Data e hora atual para identificar os arquivos de teste
 CURRENT_DATETIME=$(date "+%Y-%m-%d_%H%M%S")
@@ -26,7 +32,7 @@ mkdir -p $OUTPUT_DIR
 # Verifica se o diretório foi criado corretamente
 if [[ -d "$OUTPUT_DIR" && -d "$LATEST_TEST_DIR" ]]; then
     # Move os arquivos de saída para o novo diretório
-    mv $LATEST_TEST_DIR/* $OUTPUT_DIR
+    mv $LATEST_TEST_DIR/* "$OUTPUT_DIR/"
     echo "Arquivos de teste movidos para $OUTPUT_DIR/"
 else
     echo "Erro: Não foi possível criar o diretório de saída ou encontrar o diretório de teste do Maestro."
